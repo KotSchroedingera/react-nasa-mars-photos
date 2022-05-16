@@ -13,7 +13,11 @@ export const RoversInfo = observer(() => {
   }, []);
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-evenly',
+      gap: '1rem'
+    }}>
       {rovers.map(elem => <RoverPreview key={elem.id} {...elem} />)} 
     </div>
   )
