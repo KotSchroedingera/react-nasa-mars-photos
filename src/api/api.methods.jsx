@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from './api.config';
 
 
-const checkRoverName = (name) => {
+export const checkRoverName = (name) => {
   if (!config.rovers.includes(name.toLowerCase())) {
     console.error(`"${name}" - there is no such rover.`);
     return false;
@@ -32,7 +32,7 @@ export const createPhoroManifestUrl = (roverName) => {
   }
 }; 
 
-export const getPhotoManifestInfo = async (roverName) => {
+export const getManifestInfo = async (roverName) => {
   const resp = await axios.get(createPhoroManifestUrl(roverName), {
     params: { 'api_key': config.key }
   }); 

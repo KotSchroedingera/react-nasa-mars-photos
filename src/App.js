@@ -1,20 +1,29 @@
 import React, { useEffect } from 'react'
-import { RoversInfo } from './components/RoversInfo'; 
-import { Rovers } from './store/store';
+import { roversMb } from './store/store';
 import { observer } from 'mobx-react-lite';
-
-export const roversMb = new Rovers();
+import { Header } from './components/Header';
+import { Route, Routes } from 'react-router-dom';
+import { PhotoPage } from './pages/PhotoPage';
+import { Footer } from './components/Footer';
+import { MainPage } from './pages/MainPage';
+import { RoverPage } from './pages/RoverPage';
 
 
 const App = () => {
 
   useEffect(() => {
-    roversMb.getRovers();
+    roversMb.fetchRovers();
   }, []);
 
   return (
     <div>
-      <RoversInfo data={roversMb.rovers} />
+      <Header />
+      <Routes>
+        <Route path='/' element={<MainPage />} />
+        <Route path='photos' element={<PhotoPage />} />
+        <Route path='/rover/:rover' element={<RoverPage></RoverPage>} />
+      </Routes>
+      <Footer />
     </div>
   );
 

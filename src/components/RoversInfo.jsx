@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
-import { roversMb } from '../App';
+import { roversMb } from '../store/store';
 import { RoverPreview } from './RoverPreview';
 
 
@@ -16,6 +16,7 @@ export const RoversInfo = observer(() => {
     <div style={{
       display: 'flex',
       justifyContent: 'space-evenly',
+      flexWrap: 'wrap',
       gap: '1rem'
     }}>
       {rovers.map(elem => <RoverPreview key={elem.id} {...elem} />)} 

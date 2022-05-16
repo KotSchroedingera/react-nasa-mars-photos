@@ -1,17 +1,18 @@
 import { makeAutoObservable } from "mobx";
 import config from '../api/api.config';
-import { getRoverInfo } from '../api/api.methods';
+import { getManifestInfo, getRoverInfo } from '../api/api.methods';
 
 
 class Rovers {
 
   rovers = []; 
+  manifests = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getRovers() {
+  fetchRovers() {
     config.rovers.forEach(elem => {
       getRoverInfo(elem)
         .then(data => this.addRover(data));
@@ -23,10 +24,22 @@ class Rovers {
     this.rovers.push(elem);
   }
 
-  get info() {
-    return `Total: ${this.rovers.length}`;
+  fetchMainfest(name) {
+    getManifestInfo(name)
+      .then(data => this.addManifest(data));
+  }
+
+  addManifest(elem) {
+    if (this.manifests.find(manifest => {
+      return manifest.name === elem.name
+    })) return;
+    this.manifests.push(elem);
+  }
+
+  getManifest(name) {
+    return this.manifests.find(elem => elem.name.toLowerCase() === name.toLowerCase());
   }
 
 }
 
-export { Rovers };
+export const roversMb = new Rovers();
