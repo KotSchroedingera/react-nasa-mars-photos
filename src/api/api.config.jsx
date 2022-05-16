@@ -6,53 +6,53 @@ const config = {
     'opportunity', 
     'spirit'
   ], 
-  cameras: {
-    fhaz: {
-      abbr: 'fhaz', 
-      name: 'Front Hazard Avoidance Camera',
+  cameras: [
+    {
+      name: 'fhaz', 
+      full_name: 'Front Hazard Avoidance Camera',
       rovers: ['curiosity', 'opportunity', 'spirit']
     },
-    rhaz: {
-      abbr: 'rhaz', 
-      name: 'Rear Hazard Avoidance Camera',
+    {
+      name: 'rhaz', 
+      full_name: 'Rear Hazard Avoidance Camera',
       rovers: ['curiosity', 'opportunity', 'spirit']
     }, 
-    mast: {
-      abbr: 'mast', 
-      name: 'Mast camera', 
+    {
+      name: 'mast', 
+      full_name: 'Mast camera', 
       rovers: ['curiosity']
     }, 
-    chemcam: {
-      abbr: 'chemcam', 
-      name: 'Chemistry and Camera Complex', 
+    {
+      name: 'chemcam', 
+      full_name: 'Chemistry and Camera Complex', 
       rovers: ['curiosity'] 
     },
-    mahli: {
-      abbr: 'mahli', 
-      name: 'Mars Hand Lens Imager', 
+    {
+      name: 'mahli', 
+      full_name: 'Mars Hand Lens Imager', 
       rovers: ['curiosity']
     }, 
-    mardi: {
-      abbr: 'mardi', 
-      name: 'Mars Descent Imager', 
+    {
+      name: 'mardi', 
+      full_name: 'Mars Descent Imager', 
       rovers: ['curiosity']
     }, 
-    navcam: {
-      abbr: 'navcam', 
-      name: 'Navigation Camera', 
+    {
+      name: 'navcam', 
+      full_name: 'Navigation Camera', 
       rovers: ['curiosity', 'opportunity', 'spirit']
     },
-    pancam: {
-      abbr: 'pancam', 
-      name: 'Panoramic Camera', 
+    {
+      name: 'pancam', 
+      full_name: 'Panoramic Camera', 
       rovers: ['opportunity', 'spirit'] 
     }, 
-    minites: {
-      abbr: 'minites', 
-      name: 'Miniature Thermal Emission Spectrometer (Mini-TES)', 
+    {
+      name: 'minites', 
+      full_name: 'Miniature Thermal Emission Spectrometer (Mini-TES)', 
       rovers: ['opportunity', 'spirit'] 
     }
-  }
+  ]
 }; 
 
 export default config;

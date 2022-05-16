@@ -14,7 +14,8 @@ export const PhotoInfo = () => {
   return (
     <div>
       { error && error.message }
-      { photoInfo && photoInfo.name }
+      { photoInfo && photoInfo.name } <br />
+      { photoInfo && photoInfo.total_photos }
     </div>
   )
 }
