@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { RoversInfo } from '../components/RoversInfo';
-import { roversMb } from '../store/store'
+import roverStore from '../store/store';
+
 
 export const MainPage = () => {
 
   useEffect(() => {
-    // roversMb.getRovers();
+    roverStore.fetchAllRovers();
   }, []);
 
   return (
     <>
-      {/* <RoversInfo data={roversMb.rovers} /> */}
+      <RoversInfo />
     </>
   )
 }

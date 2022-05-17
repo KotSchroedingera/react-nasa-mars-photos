@@ -8,9 +8,6 @@ import { Footer } from './components/Footer';
 import { MainPage } from './pages/MainPage';
 import { RoverPage } from './pages/RoverPage';
 
-import roversStore from './store/store';
-console.log(roversStore.quantity);
-
 const App = () => {
 
   return (
@@ -19,7 +16,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='photos' element={<PhotoPage />} />
-        <Route path='/rover/:rover' element={<RoverPage></RoverPage>} />
+        <Route path='/rover/:rover' element={<RoverPage />} />
       </Routes>
       <Footer />
     </div>

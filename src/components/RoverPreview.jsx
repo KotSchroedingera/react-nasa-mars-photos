@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 
 export const RoverPreview = ({...props}) => {
  
@@ -29,7 +31,9 @@ export const RoverPreview = ({...props}) => {
           alt={name}
           height='100%' />
       </div>
-      <p>Rovername: {name}</p>
+      <p>
+        <Link to={`/rover/${name}`}>Roversname: {name}</Link>
+      </p>
       <p>Status: {status}</p>
       <div>
         <p>Launched: {launch_date}</p>

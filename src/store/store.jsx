@@ -1,5 +1,8 @@
-import { flow, getSnapshot, types } from "mobx-state-tree";
-import { getRoverInfo } from "../api/api.methods";
+import makeInspectable from "mobx-devtools-mst";
+import { flow, types } from "mobx-state-tree";
+import { getManifestInfo, getRoverInfo } from "../api/api.methods";
+import config from "../api/api.config";
+
 
 const CameraType = types
   .model({
@@ -20,32 +23,68 @@ const RoverType = types
     total_photos: types.integer,
   }); 
 
+const ManifestPhotosType = types.model({
+  "sol": types.integer,
+  "earth_date": types.string,
+  "total_photos": types.integer,
+  "cameras": types.array(types.string)
+});
+
+const ManifestType = types.model({
+  "name": types.identifier,
+  "landing_date": types.string,
+  "launch_date": types.string,
+  "status": types.string,
+  "max_sol": types.number,
+  "max_date": types.string,
+  "total_photos": types.number, 
+  "photos": types.array(ManifestPhotosType)
+});
+
+
 const RoverStore = types
   .model('RoverStore', {
     loading: types.boolean = false, 
-    rovers: types.array(RoverType)
+    rovers: types.array(RoverType), 
+    manifests: types.array(ManifestType)
   })
-  .views(self => {
-    return {
-      get quantity() {
-        return self.rovers.length;
-      }
+  .views(self => ({
+    manifest(name) {
+      return self.manifests.find(elem => elem.name === name);
     }
-  })
-  .actions(self => {
-    return {
-      addRover(rover) {
-        self.rovers.push(rover);
-      }
-    }
-  })
+  }))
   .actions(self => ({
-    fetchRovers: flow(function* fetchRovers(name) {
+    addRover(rover) {
+      self.rovers.push(rover);
+    }, 
+    addManifest(manifest) {
+      self.manifests.push(manifest);
+    }
+  }))
+  .actions(self => ({
+    fetchRover: flow(function* (name) {
       self.loading = true;
       try {
         const rover = yield getRoverInfo(name);
-        console.log(rover);
+        if (self.rovers.find(elem => elem.id === rover.id)) return;
         self.addRover(rover); 
+        self.loading = false;
+      } catch(err) {
+        console.log(err); 
+        self.loading = false;
+      }
+    }),
+    fetchAllRovers() {
+      config.rovers.forEach(elem => {
+        self.fetchRover(elem);
+      })
+    },
+    fetchManifest: flow(function* (name) {
+      self.loading = true;
+      try {
+        const manifest = yield getManifestInfo(name);
+        if (self.manifests.find(elem => elem.name === manifest.name)) return;
+        self.addManifest(manifest); 
         self.loading = false;
       } catch(err) {
         console.log(err); 
@@ -54,60 +93,7 @@ const RoverStore = types
     })
   }));
 
-  const store = RoverStore.create();
-  console.log(getSnapshot(store));
-  console.log(store.quantity);
-  // store.addRover({
-  //   name: 'luna', 
-  //   status: 'complete',
-  //   total_photos: 123
-  // })
-  console.log(getSnapshot(store));
-  store.fetchRovers('spirit');
-  console.log(getSnapshot(store));
-
-  export default store;
-
-
-
-
-// class Rovers {
-
-//   rovers = []; 
-//   manifests = [];
-
-//   constructor() {
-//     makeAutoObservable(this);
-//   }
-
-//   fetchRovers() {
-//     config.rovers.forEach(elem => {
-//       getRoverInfo(elem)
-//         .then(data => this.addRover(data));
-//     });
-//   }
-
-//   addRover(elem) {
-//     if (this.rovers.find(rover => rover.id === elem.id)) return;
-//     this.rovers.push(elem);
-//   }
-
-//   fetchMainfest(name) {
-//     getManifestInfo(name)
-//       .then(data => this.addManifest(data));
-//   }
-
-//   addManifest(elem) {
-//     if (this.manifests.find(manifest => {
-//       return manifest.name === elem.name
-//     })) return;
-//     this.manifests.push(elem);
-//   }
-
-//   getManifest(name) {
-//     return this.manifests.find(elem => elem.name.toLowerCase() === name.toLowerCase());
-//   }
-
-// }
-
-// export const roversMb = makeInspectable(new Rovers());
+const roverStore = RoverStore.create();
+window.store = roverStore;
+makeInspectable(roverStore);
+export default roverStore;
