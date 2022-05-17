@@ -45,7 +45,7 @@ const RoverStore = types
       try {
         const rover = yield getRoverInfo(name);
         console.log(rover);
-        self.rovers.push(rover); 
+        self.addRover(rover); 
         self.loading = false;
       } catch(err) {
         console.log(err); 
