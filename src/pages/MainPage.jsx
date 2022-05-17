@@ -5,7 +5,7 @@ import { roversMb } from '../store/store'
 export const MainPage = () => {
 
   useEffect(() => {
-    roversMb.getRovers();
+    // roversMb.getRovers();
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import config from '../api/api.config';
 import { getManifestInfo, getRoverInfo } from '../api/api.methods';
+import makeInspectable from 'mobx-devtools-mst';
 
 
 class Rovers {
@@ -42,4 +43,4 @@ class Rovers {
 
 }
 
-export const roversMb = new Rovers();
+export const roversMb = makeInspectable(new Rovers());
