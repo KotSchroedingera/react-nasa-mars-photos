@@ -8,10 +8,6 @@ export const RoversInfo = observer(() => {
 
   const [rovers, setRovers] = useState([]);
 
-  useEffect(() => {
-    setRovers(roversMb.rovers);
-  }, []);
-
   return (
     <div style={{
       display: 'flex',

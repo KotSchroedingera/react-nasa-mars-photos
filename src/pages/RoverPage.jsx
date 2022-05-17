@@ -8,11 +8,11 @@ export const RoverPage = () => {
   const { rover } = useParams();
   const [manifest, setManifest] = useState(null);
 
-  useEffect(() => {
-    roversMb.fetchMainfest(rover);
-    const result = roversMb.getManifest(rover);
-    console.log(result);
-  }, [rover, roversMb.manifests]);
+  // useEffect(() => {
+  //   roversMb.fetchMainfest(rover);
+  //   const result = roversMb.getManifest(rover);
+  //   console.log(result);
+  // }, [rover, roversMb.manifests]);
 
   if (!checkRoverName(rover)) return (
     <div>

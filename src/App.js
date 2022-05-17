@@ -8,12 +8,10 @@ import { Footer } from './components/Footer';
 import { MainPage } from './pages/MainPage';
 import { RoverPage } from './pages/RoverPage';
 
+import roversStore from './store/store';
+console.log(roversStore.quantity);
 
 const App = () => {
-
-  useEffect(() => {
-    roversMb.fetchRovers();
-  }, []);
 
   return (
     <div>

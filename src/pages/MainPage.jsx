@@ -10,7 +10,7 @@ export const MainPage = () => {
 
   return (
     <>
-      <RoversInfo data={roversMb.rovers} />
+      {/* <RoversInfo data={roversMb.rovers} /> */}
     </>
   )
 }
