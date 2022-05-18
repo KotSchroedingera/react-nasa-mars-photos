@@ -40,5 +40,18 @@ export const getManifestInfo = async (roverName) => {
 };
 
 
+export const createPhotosBySolUrl = obj => {
+  const { name, sol } = obj;
+  let result = `${config.baseUrl}/rovers/${name}/photos?sol=${sol}`;
+  return result;
+}; 
+
+export const getPhotosBySol = async (obj) => {
+  const resp = await axios.get(createPhotosBySolUrl(obj), {
+    params: { 'api_key': config.key }
+  });
+  return resp.data.photos;
+};
+
 
 

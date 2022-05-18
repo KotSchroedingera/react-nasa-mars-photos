@@ -1,6 +1,6 @@
 import makeInspectable from "mobx-devtools-mst";
 import { flow, types } from "mobx-state-tree";
-import { getManifestInfo, getRoverInfo } from "../api/api.methods";
+import { getManifestInfo, getPhotosBySol, getRoverInfo } from "../api/api.methods";
 import config from "../api/api.config";
 
 
@@ -19,7 +19,7 @@ const RoverType = types
     max_date: types.string,
     max_sol: types.integer,
     name: types.string,
-    status: types.string,
+    status: types.enumeration(['active', 'complete']),
     total_photos: types.integer,
   }); 
 
@@ -41,16 +41,26 @@ const ManifestType = types.model({
   "photos": types.array(ManifestPhotosType)
 });
 
+const PhotoSolType = types.model({
+  "id": types.identifierNumber,
+  "sol": types.integer,
+  "img_src": types.string,
+  "earth_date": "2004-01-26",
+});
 
 const RoverStore = types
   .model('RoverStore', {
     loading: types.boolean = false, 
     rovers: types.array(RoverType), 
-    manifests: types.array(ManifestType)
+    manifests: types.array(ManifestType), 
+    currentPhotos: types.array(PhotoSolType),
   })
   .views(self => ({
     manifest(name) {
       return self.manifests.find(elem => elem.name === name);
+    },
+    get photosLength() {
+      return self.currentPhotos.length;
     }
   }))
   .actions(self => ({
@@ -59,6 +69,10 @@ const RoverStore = types
     }, 
     addManifest(manifest) {
       self.manifests.push(manifest);
+    },
+    afterCreate() {
+      self.fetchAllRovers();
+      self.fetchAllManifests();
     }
   }))
   .actions(self => ({
@@ -90,10 +104,27 @@ const RoverStore = types
         console.log(err); 
         self.loading = false;
       }
+    }),
+    fetchAllManifests() {
+      config.rovers.forEach(elem => {
+        self.fetchManifest(elem);
+      })
+    },
+    fetchPhotosBySol: flow(function* (obj) {
+      self.loading = true;
+      try {
+        const data = yield getPhotosBySol(obj);
+        self.currentPhotos = data;
+      } catch(err) {
+        console.log(err); 
+        self.loading = false;
+      }
     })
-  }));
+  }
+));
 
 const roverStore = RoverStore.create();
 window.store = roverStore;
+
 makeInspectable(roverStore);
 export default roverStore;

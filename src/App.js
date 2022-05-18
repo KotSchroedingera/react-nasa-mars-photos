@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
-import { roversMb } from './store/store';
-import { observer } from 'mobx-react-lite';
+import React from 'react'
 import { Header } from './components/Header';
 import { Route, Routes } from 'react-router-dom';
 import { PhotoPage } from './pages/PhotoPage';
@@ -15,7 +13,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<MainPage />} />
-        <Route path='photos' element={<PhotoPage />} />
+        <Route path='/photos/' element={<PhotoPage />} />
         <Route path='/rover/:rover' element={<RoverPage />} />
       </Routes>
       <Footer />
@@ -24,4 +22,4 @@ const App = () => {
 
 }; 
 
-export default observer(App);
+export default App;
