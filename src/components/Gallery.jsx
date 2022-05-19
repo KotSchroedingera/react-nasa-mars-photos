@@ -3,7 +3,7 @@ import React from 'react';
 import roverStore from '../store/store';
 
 
-const Gallery = observer(() => {
+const Gallery = () => {
   return (
     <>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
@@ -14,7 +14,7 @@ const Gallery = observer(() => {
       </div> 
     </>
   )
-});
+};
 
 
 export default Gallery;
