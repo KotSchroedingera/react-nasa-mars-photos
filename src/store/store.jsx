@@ -70,10 +70,6 @@ const RoverStore = types
     addManifest(manifest) {
       self.manifests.push(manifest);
     },
-    afterCreate() {
-      self.fetchAllRovers();
-      self.fetchAllManifests();
-    }
   }))
   .actions(self => ({
     fetchRover: flow(function* (name) {

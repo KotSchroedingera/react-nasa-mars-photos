@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useSearchParams } from 'react-router-dom';
 import roverStore from '../store/store';
-import { ImgLazy } from '../elements/ImgLazy';
 import { Link } from 'react-router-dom';
+import { lazy } from 'react';
+import { Suspense } from 'react';
+
+const GalleryLazy = lazy(() => import('../components/Gallery'));
 
 
-export const PhotoPage = observer(() => {
+const PhotoPage = () => {
   
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -31,10 +34,11 @@ export const PhotoPage = observer(() => {
         <p>Filter camera</p>
         <p>Page: {searchParams.get('page')}</p>
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {roverStore.currentPhotos.map(elem => <ImgLazy 
-          key={elem.id} {...elem}></ImgLazy>)}
-      </div>
+      <Suspense fallback='loading'>
+        <GalleryLazy />
+      </Suspense>
     </div>
   )
-})
+}; 
+
+export default PhotoPage;

@@ -16,4 +16,4 @@ export const RoversInfo = observer(() => {
       {roverStore.rovers.map(elem => <RoverPreview key={elem.id} {...elem} />)} 
     </div>
   )
-})
+});

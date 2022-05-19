@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Header } from './components/Header';
 import { Route, Routes } from 'react-router-dom';
-import { PhotoPage } from './pages/PhotoPage';
+import PhotoPage from './pages/PhotoPage';
 import { Footer } from './components/Footer';
 import { MainPage } from './pages/MainPage';
 import { RoverPage } from './pages/RoverPage';
