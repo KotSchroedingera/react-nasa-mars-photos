@@ -40,16 +40,18 @@ export const getManifestInfo = async (roverName) => {
 };
 
 
-export const createPhotosBySolUrl = obj => {
-  const { name, sol } = obj;
-  let result = `${config.baseUrl}/rovers/${name}/photos?sol=${sol}`;
-  return result;
-}; 
+export const getFilteredPhotos = async (obj) => {
+  let { name, sol, earth_date, cameras } = obj;
+  if (!name) name = 'spirit';
 
-export const getPhotosBySol = async (obj) => {
-  const resp = await axios.get(createPhotosBySolUrl(obj), {
-    params: { 'api_key': config.key }
-  });
+  const resp = await axios
+    .get(`${config.baseUrl}/rovers/${name}/photos`, {
+      params: {
+        sol, earth_date, 
+        'api_key': config.key,
+      }
+    });
+
   return resp.data.photos;
 };
 

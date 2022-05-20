@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-const Manifest = observer(({ manifest, rover }) => {
+const Manifest = ({ manifest, rover }) => {
   if (!manifest) return;
 
   return (
@@ -33,7 +33,7 @@ const Manifest = observer(({ manifest, rover }) => {
         )})}
     </> 
   )
-}); 
+}; 
 
 export default Manifest;
 

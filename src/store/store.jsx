@@ -1,7 +1,8 @@
 import makeInspectable from "mobx-devtools-mst";
 import { flow, types } from "mobx-state-tree";
-import { getManifestInfo, getPhotosBySol, getRoverInfo } from "../api/api.methods";
+import { getManifestInfo, getFilteredPhotos, getRoverInfo } from "../api/api.methods";
 import config from "../api/api.config";
+import { type } from "@testing-library/user-event/dist/type";
 
 
 const CameraType = types
@@ -10,8 +11,7 @@ const CameraType = types
     full_name: types.string,
   });
 
-const RoverType = types
-  .model({
+const RoverType = types.model({
     cameras: types.array(CameraType),
     id: types.identifierNumber,
     landing_date: types.string,
@@ -45,7 +45,23 @@ const PhotoSolType = types.model({
   "id": types.identifierNumber,
   "sol": types.integer,
   "img_src": types.string,
-  "earth_date": "2004-01-26",
+  "earth_date": types.string,
+});
+
+const FiltersType = types.model({
+  "rover": types.string, 
+  "sol": types.maybe(types.number || -1),
+  "earth_date": types.maybe(types.string, ''), 
+  "cameras": types.maybe(types.enumeration([
+    'FHAZ', 
+    'RHAZ', 
+    'MAST', 
+    'CHEMCAM', 
+    'MAHLI', 
+    'MARDI', 
+    'NAVCAM', 
+    'PANCAM', 
+    'MINITES']), []),
 });
 
 const RoverStore = types
@@ -54,6 +70,7 @@ const RoverStore = types
     rovers: types.array(RoverType), 
     manifests: types.array(ManifestType), 
     currentPhotos: types.array(PhotoSolType),
+    filters: types.map(FiltersType),
   })
   .views(self => ({
     manifest(name) {
@@ -61,6 +78,9 @@ const RoverStore = types
     },
     get photosLength() {
       return self.currentPhotos.length;
+    },
+    getFilter(name) {
+      return self.filters[name];
     }
   }))
   .actions(self => ({
@@ -70,6 +90,9 @@ const RoverStore = types
     addManifest(manifest) {
       self.manifests.push(manifest);
     },
+    setFilter(param, value) {
+      self.filters[param] = value;
+    }
   }))
   .actions(self => ({
     fetchRover: flow(function* (name) {
@@ -106,10 +129,10 @@ const RoverStore = types
         self.fetchManifest(elem);
       })
     },
-    fetchPhotosBySol: flow(function* (obj) {
+    fetchFilteredPhotos: flow(function* (filters) {
       self.loading = true;
       try {
-        const data = yield getPhotosBySol(obj);
+        const data = yield getFilteredPhotos(self.filters);
         self.currentPhotos = data;
       } catch(err) {
         console.log(err); 

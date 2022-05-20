@@ -1,9 +1,10 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react'; 
 import roverStore from '../store/store';
+import { observer } from 'mobx-react-lite';
 
 
-const Gallery = () => {
+const Gallery = observer(() => {
+  
   return (
     <>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
@@ -14,7 +15,7 @@ const Gallery = () => {
       </div> 
     </>
   )
-};
+})
 
 
 export default Gallery;
