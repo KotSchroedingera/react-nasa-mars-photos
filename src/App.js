@@ -1,15 +1,17 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Header } from './components/Header';
 import { Route, Routes } from 'react-router-dom';
 import PhotoPage from './pages/PhotoPage';
 import { Footer } from './components/Footer';
 import { MainPage } from './pages/MainPage';
 import { RoverPage } from './pages/RoverPage';
+import { CssBaseline } from '@mui/material';
 
 const App = () => {
 
   return (
-    <div>
+    <>
+      <CssBaseline />
       <Header />
       <Routes>
         <Route path='/' element={<MainPage />} />
@@ -17,7 +19,7 @@ const App = () => {
         <Route path='/rover/:rover' element={<RoverPage />} />
       </Routes>
       <Footer />
-    </div>
+    </>
   );
 
 }; 

@@ -11,7 +11,7 @@ export const RoverPage = observer(() => {
 
   useEffect(() => {
     if (!roverStore.manifest(rover)) roverStore.fetchManifest(rover);
-  }, [rover, roverStore.manifest(rover)]);
+  }, [rover]);
 
   return (
     <Suspense fallback='loading...'>

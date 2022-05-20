@@ -1,5 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'; 
+import { Card, CardMedia, CardContent, Typography, CardActions, Button, List, ListItemText, ListItem } from '@mui/material';
+import styledComponents from 'styled-components';
 
 
 export const RoverPreview = ({...props}) => {
@@ -16,44 +18,65 @@ export const RoverPreview = ({...props}) => {
   } = props;
 
   const imgSrc = `../img/${name.toLowerCase()}.jpg`;
+  
+  const ListEl = styledComponents(List)`
+    padding: 0;
+  `;
+
+  const ListItemEl = styledComponents(ListItem)`
+    padding: 0;
+  `;
+
+  const Cameras = styledComponents.div`
+    margin-top: 1rem;
+  `;
+
+  const CardEl = styledComponents(Card)`
+    height: 100%;
+  `;
 
   return (
-    <div>
-      <div style={{
-        maxHeight: 400, 
-        overflow: 'hidden', 
-        display: 'flex',
-        flexDirection: 'column', 
-        justifyContent: 'center'
-      }}>
-        <img 
-          src={imgSrc} 
-          alt={name}
-          height='100%' />
-      </div>
-      <p>
-        <Link to={`/rover/${name}`}>Roversname: {name}</Link>
-      </p>
-      <p>Status: {status}</p>
-      <div>
-        <p>Launched: {launch_date}</p>
-        <p>Landed: {landing_date}</p>
-      </div>
-      <div>
-        <p>Martian days: {max_sol}</p>
-        <p>Last photo date: {max_date}</p>
-      </div>
-      <div>
-        Photos: {total_photos}
-      </div>
-      <div>
-        Cameras: 
-        <ul>
-          {cameras.map(elem => <li key={elem.name}>
-            {elem.name} ({elem.full_name})
-          </li>)}
-        </ul>
-      </div>
-    </div>
+    <CardEl>
+      <CardMedia
+        component="img"
+        height="300"
+        image={imgSrc}
+        alt={name}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <p><b>Status:</b> {status}</p>
+          <div>
+            <p><b>Launched:</b> {launch_date}</p>
+            <p><b>Landed:</b> {landing_date}</p>
+          </div>
+          <div>
+            <p><b>Martian days:</b> {max_sol}</p>
+            <p><b>Last photo date:</b> {max_date}</p>
+          </div>
+          <div>
+            <b>Photos:</b> {total_photos}
+          </div>
+          <Cameras>
+            <b>Cameras:</b> 
+            <ListEl dense>
+              {cameras.map(elem => <ListItemEl key={elem.name}>
+                <ListItemText>
+                  {elem.name} ({elem.full_name})
+                </ListItemText>
+              </ListItemEl>)}
+            </ListEl>
+          </Cameras>
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button 
+          href={`/rover/${name}`}
+          size="small">Manifest</Button>
+      </CardActions>
+    </CardEl>
   )
 }

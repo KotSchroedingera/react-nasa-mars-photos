@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'; 
+import React from 'react'; 
 import { useSearchParams } from 'react-router-dom';
-import roverStore from '../store/store';
 import { Link } from 'react-router-dom';
 import { lazy } from 'react';
 import { Suspense } from 'react';
@@ -11,7 +10,7 @@ const GalleryLazy = lazy(() => import('../components/Gallery'));
 
 const PhotoPage = () => {
   
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   return (
     <div>

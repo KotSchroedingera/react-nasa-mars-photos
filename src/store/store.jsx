@@ -2,7 +2,6 @@ import makeInspectable from "mobx-devtools-mst";
 import { flow, types } from "mobx-state-tree";
 import { getManifestInfo, getFilteredPhotos, getRoverInfo } from "../api/api.methods";
 import config from "../api/api.config";
-import { type } from "@testing-library/user-event/dist/type";
 
 
 const CameraType = types
