@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import React, { lazy, Suspense, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { ContainerStyled } from '../components/ContainerStyled';
 import roverStore from '../store/store';
 
 const ManifestLazy = lazy(() => import('../components/Manifest'))
 
-
-export const RoverPage = observer(() => {
+export const RoverPage = () => {
   const { rover } = useParams();
 
   useEffect(() => {
@@ -14,8 +14,10 @@ export const RoverPage = observer(() => {
   }, [rover]);
 
   return (
-    <Suspense fallback='loading...'>
-      <ManifestLazy manifest={roverStore.manifest(rover)} rover={rover} />
-    </Suspense>
+    <ContainerStyled>
+      <Suspense fallback='loading...'>
+        <ManifestLazy rover={rover} />
+      </Suspense>
+    </ContainerStyled>
   )  
-})
+}

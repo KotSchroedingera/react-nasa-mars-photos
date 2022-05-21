@@ -1,8 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'; 
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, List, ListItemText, ListItem } from '@mui/material';
 import styledComponents from 'styled-components';
 
+const ListStyled = styledComponents(List)`
+  padding: 0;
+`;
+
+const ListItemStyled = styledComponents(ListItem)`
+  padding: 0;
+`;
+
+const Cameras = styledComponents.div`
+  margin-top: 1rem;
+  li {
+    padding: 0;
+  }
+`;
+
+const CardStyled = styledComponents(Card)`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CardActionsStyled = styledComponents(CardActions)`
+  margin-top: auto;
+`;
 
 export const RoverPreview = ({...props}) => {
  
@@ -19,24 +42,8 @@ export const RoverPreview = ({...props}) => {
 
   const imgSrc = `../img/${name.toLowerCase()}.jpg`;
   
-  const ListEl = styledComponents(List)`
-    padding: 0;
-  `;
-
-  const ListItemEl = styledComponents(ListItem)`
-    padding: 0;
-  `;
-
-  const Cameras = styledComponents.div`
-    margin-top: 1rem;
-  `;
-
-  const CardEl = styledComponents(Card)`
-    height: 100%;
-  `;
-
   return (
-    <CardEl>
+    <CardStyled>
       <CardMedia
         component="img"
         height="300"
@@ -47,7 +54,7 @@ export const RoverPreview = ({...props}) => {
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" component="div" color="text.secondary">
           <p><b>Status:</b> {status}</p>
           <div>
             <p><b>Launched:</b> {launch_date}</p>
@@ -62,21 +69,21 @@ export const RoverPreview = ({...props}) => {
           </div>
           <Cameras>
             <b>Cameras:</b> 
-            <ListEl dense>
-              {cameras.map(elem => <ListItemEl key={elem.name}>
+            <ListStyled dense>
+              {cameras.map(elem => <ListItemStyled key={elem.name}>
                 <ListItemText>
                   {elem.name} ({elem.full_name})
                 </ListItemText>
-              </ListItemEl>)}
-            </ListEl>
+              </ListItemStyled>)}
+            </ListStyled>
           </Cameras>
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActionsStyled>
         <Button 
           href={`/rover/${name}`}
           size="small">Manifest</Button>
-      </CardActions>
-    </CardEl>
+      </CardActionsStyled>
+    </CardStyled>
   )
 }
