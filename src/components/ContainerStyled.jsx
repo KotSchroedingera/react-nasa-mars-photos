@@ -10,6 +10,8 @@ const Wrapper = styledComponents.div`
   margin: auto;
   justify-content: center;
   padding: 0 1rem;
+  height: 100%;
+  width: 100%;
 `;
 
 export const ContainerStyled = ({ children, ...props }) => {

@@ -47,7 +47,7 @@ export const getFilteredPhotos = async (obj) => {
   const resp = await axios
     .get(`${config.baseUrl}/rovers/${name}/photos`, {
       params: {
-        sol, earth_date, 
+        sol, earth_date,
         'api_key': config.key,
       }
     });

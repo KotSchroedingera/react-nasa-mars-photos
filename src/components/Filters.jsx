@@ -10,10 +10,11 @@ export const Filters = observer(() => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [sol, setSol] = useState(searchParams.get('sol'));
+  const [name, setName] = useState(searchParams.get('name'));
 
   useEffect(() => {
-    setSearchParams({ ...searchParams, sol });
-  }, [sol])
+    setSearchParams({ ...searchParams, sol, name });
+  }, [sol, name])
 
   useEffect(() => {
     roverStore.setFilter('name', searchParams.get('name'));

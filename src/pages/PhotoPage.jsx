@@ -4,24 +4,20 @@ import { Link } from 'react-router-dom';
 import { lazy } from 'react';
 import { Suspense } from 'react';
 import { Filters } from '../components/Filters';
+import { ContainerStyled } from '../components/ContainerStyled';
 
 const GalleryLazy = lazy(() => import('../components/Gallery'));
 
 
 const PhotoPage = () => {
   
-  const [searchParams] = useSearchParams();
-
   return (
-    <div>
-      <div>
-        <Link to={`/rover/${searchParams.get('name')}`}>Back to {searchParams.get('name')}</Link>
-      </div>
+    <ContainerStyled>
       <Filters />
       <Suspense fallback='loading'>
         <GalleryLazy />
       </Suspense>
-    </div>
+    </ContainerStyled>
   )
 }; 
 
