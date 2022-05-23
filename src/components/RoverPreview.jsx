@@ -82,7 +82,7 @@ export const RoverPreview = ({...props}) => {
       <CardActionsStyled>
         <Button 
           href={`/rover/${name}`}
-          size="small">Manifest</Button>
+          size="small">To photos</Button>
       </CardActionsStyled>
     </CardStyled>
   )

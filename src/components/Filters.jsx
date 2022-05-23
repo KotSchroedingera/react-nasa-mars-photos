@@ -15,7 +15,8 @@ const Wrapper = styledComponents.div`
   align-items: center;
   margin-top: 1rem;
   @media (max-width: 600px) {
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
   }
 `; 
 
