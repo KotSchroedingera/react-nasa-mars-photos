@@ -4,7 +4,7 @@ import styledComponents from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styledComponents.div`
-
+  height: 820px;
 `;
 
 const ManifestTable = ({ photos, rover }) => {
@@ -32,7 +32,7 @@ const ManifestTable = ({ photos, rover }) => {
       <DataGrid
         rows={rows}
         columns={columns}
-        rowsPerPageOptions={[20, 50, 100, photos.length]}
+        rowsPerPageOptions={[100, 500, 1000, photos.length]}
         disableSelectionOnClick
       />
     </Wrapper>

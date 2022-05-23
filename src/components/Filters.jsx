@@ -3,7 +3,24 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react'
 import roverStore from '../store/store';
 import { observer } from 'mobx-react-lite';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
+import styledComponents from 'styled-components';
 
+const Wrapper = styledComponents.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
+  margin: 1rem 0;
+`; 
+
+const SolFilterWrapper = styledComponents.div`
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
 export const Filters = observer(() => {
 
@@ -14,7 +31,7 @@ export const Filters = observer(() => {
 
   useEffect(() => {
     setSearchParams({ ...searchParams, sol, name });
-  }, [sol, name])
+  }, [sol, name]);
 
   useEffect(() => {
     roverStore.setFilter('name', searchParams.get('name'));
@@ -25,45 +42,36 @@ export const Filters = observer(() => {
   }, [searchParams]);
 
   return (
-    <div>
-      <div>
-        <h4>Rover</h4>
-        <ul>
-          <li>All</li>
-          <li>Curiosity</li>
-          <li>Opportunity</li>
-          <li>Spirit</li>
-        </ul>
-      </div>
-      <div>
-        <h4>Sol</h4>
-        <input 
+    <Wrapper>
+      <FormControl>
+        <FormLabel id="row-radio-buttons-group-label">Rover</FormLabel>
+        <RadioGroup
+          aria-labelledby="row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          onChange={evt => {
+            setName(evt.target.value)
+          }}
+        >
+          <FormControlLabel value="opportunity" control={<Radio />} label="Opportunity" />
+          <FormControlLabel value="curiosity" control={<Radio />} label="Curiosity" />
+          <FormControlLabel value="spirit" control={<Radio />} label="Spirit" />
+        </RadioGroup>
+      </FormControl>
+      <SolFilterWrapper>
+        <FormLabel htmlFor='sol'>Sol (martian day)</FormLabel>
+        <TextField
+          id="sol" 
+          label="Enter sol" 
+          type='number'
           value={sol}
+          InputLabelProps={{
+            shrink: true,
+          }}
           onChange={evt => {
             setSol(evt.target.value)
-          }}
-          type="number" />
-      </div>
-      <div>
-        <h4>Earth Date</h4>
-        <input type="text" />
-      </div>
-      <div>
-        <h4>Camera</h4>
-        {/* <ul>
-          <li>All</li>
-          <li>FHAZ</li>
-          <li>RHAZ</li>
-          <li>MAST</li>
-          <li>CHEMCAM</li>
-          <li>MAHLI</li>
-          <li>MARDI</li>
-          <li>NAVCAM</li>
-          <li>PANCAM</li>
-          <li>MINITES</li>
-        </ul> */}
-      </div>
-    </div>
+          }} />
+      </SolFilterWrapper>
+    </Wrapper>
   )
 }
 )

@@ -1,6 +1,4 @@
 import React from 'react'; 
-import { useSearchParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { lazy } from 'react';
 import { Suspense } from 'react';
 import { Filters } from '../components/Filters';

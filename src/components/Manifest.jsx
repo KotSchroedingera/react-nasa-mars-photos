@@ -11,10 +11,17 @@ const Wrapper = styledComponents.div`
   gap: 1rem;
   width: 100%;
   margin: 1rem 0;
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const CardStyled = styledComponents(Card)`
   height: fit-content;
+  @media (max-width: 900px) {
+    height: inherit;
+  }
 `;
 
 const Manifest = observer(({ rover }) => {
@@ -30,9 +37,6 @@ const Manifest = observer(({ rover }) => {
     <Wrapper>
       <CardStyled>
         <CardContent>
-          <Typography variant="h5" component="div">
-            {`${rover} info`}
-          </Typography>
           <Typography variant="body2">
             Name: {manifest.name}
           </Typography>
