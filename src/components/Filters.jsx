@@ -3,16 +3,20 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react'
 import roverStore from '../store/store';
 import { observer } from 'mobx-react-lite';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button, ButtonGroup, Typography } from '@mui/material';
 import styledComponents from 'styled-components';
+
 
 const Wrapper = styledComponents.div`
   width: 100%;
   height: fit-content;
   display: flex;
-  gap: 1rem;
   justify-content: space-evenly;
-  margin: 1rem 0;
+  align-items: center;
+  margin-top: 1rem;
+  @media (max-width: 600px) {
+    justify-content: space-between;
+  }
 `; 
 
 const SolFilterWrapper = styledComponents.div`
@@ -31,34 +35,22 @@ export const Filters = observer(() => {
 
   useEffect(() => {
     setSearchParams({ ...searchParams, sol, name });
+    if (!roverStore.manifest(name)) roverStore.fetchManifest(name);
   }, [sol, name]);
 
   useEffect(() => {
     roverStore.setFilter('name', searchParams.get('name'));
     roverStore.setFilter('sol', searchParams.get('sol'));
-    roverStore.setFilter('earth_date', searchParams.get('earth_date'));
-    roverStore.setFilter('cameras', searchParams.get('cameras'));
     roverStore.fetchFilteredPhotos()
   }, [searchParams]);
 
+  if (!roverStore.manifest(searchParams.get('name'))) return;
+
   return (
     <Wrapper>
-      <FormControl>
-        <FormLabel id="row-radio-buttons-group-label">Rover</FormLabel>
-        <RadioGroup
-          aria-labelledby="row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          onChange={evt => {
-            setName(evt.target.value)
-          }}
-        >
-          <FormControlLabel value="opportunity" control={<Radio />} label="Opportunity" />
-          <FormControlLabel value="curiosity" control={<Radio />} label="Curiosity" />
-          <FormControlLabel value="spirit" control={<Radio />} label="Spirit" />
-        </RadioGroup>
-      </FormControl>
       <SolFilterWrapper>
-        <FormLabel htmlFor='sol'>Sol (martian day)</FormLabel>
+        <FormLabel htmlFor='sol'>Sol (martian day)
+          from {roverStore.manifest(searchParams.get('name')).photos[0].sol} to {roverStore.manifest(searchParams.get('name')).max_sol}</FormLabel>
         <TextField
           id="sol" 
           label="Enter sol" 
@@ -70,7 +62,32 @@ export const Filters = observer(() => {
           onChange={evt => {
             setSol(evt.target.value)
           }} />
+        <FormLabel>
+          {roverStore.currentPhotos.length} photos this sol 
+        </FormLabel>
+        <ButtonGroup variant="outlined" aria-label="outlined button group">
+          <Button
+            onClick={evt => setSol(+sol - 1)}
+          >previous sol</Button>
+          <Button
+             onClick={evt => setSol(+sol + 1)}
+          >next sol</Button>
+        </ButtonGroup>
       </SolFilterWrapper>
+      <FormControl>
+        <FormLabel id="row-radio-buttons-group-label">Rover</FormLabel>
+        <RadioGroup
+          aria-labelledby="row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          onChange={evt => {
+            setName(evt.target.value)
+          }}
+        >
+          <FormControlLabel value="Opportunity" control={<Radio />} label="Opportunity" checked={searchParams.get('name') === 'Opportunity'}/>
+          <FormControlLabel value="Curiosity" control={<Radio />} label="Curiosity" checked={searchParams.get('name') === 'Curiosity'}/>
+          <FormControlLabel value="Spirit" control={<Radio />} label="Spirit" checked={searchParams.get('name') === 'Spirit'}/>
+        </RadioGroup>
+      </FormControl>
     </Wrapper>
   )
 }

@@ -40,11 +40,15 @@ const ManifestType = types.model({
   "photos": types.array(ManifestPhotosType)
 });
 
+
 const PhotoSolType = types.model({
   "id": types.identifierNumber,
   "sol": types.integer,
   "img_src": types.string,
   "earth_date": types.string,
+  "camera": types.model({
+    "full_name": types.string,
+  })
 });
 
 const FiltersType = types.model({

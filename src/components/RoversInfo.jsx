@@ -3,6 +3,8 @@ import React from 'react'
 import styledComponents from 'styled-components';
 import roverStore from '../store/store';
 import { RoverPreview } from './RoverPreview';
+import { Skeleton } from '@mui/material';
+
 
 const Wrapper = styledComponents.div`
   display: grid;

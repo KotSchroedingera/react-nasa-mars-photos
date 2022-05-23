@@ -41,8 +41,7 @@ export const getManifestInfo = async (roverName) => {
 
 
 export const getFilteredPhotos = async (obj) => {
-  let { name, sol, earth_date, cameras } = obj;
-  if (!name) name = 'spirit';
+  let { name, sol, earth_date } = obj;
 
   const resp = await axios
     .get(`${config.baseUrl}/rovers/${name}/photos`, {

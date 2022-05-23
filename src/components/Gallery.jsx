@@ -1,11 +1,19 @@
 import React from 'react'; 
 import roverStore from '../store/store';
 import { observer } from 'mobx-react-lite';
-import { ImageList, ImageListItem } from '@mui/material';
+import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import styledComponents from 'styled-components';
 
 
 const Wrapper = styledComponents.div``; 
+const ImageListStyled = styledComponents(ImageList)`
+  width: 100%;
+  gap: 1rem !important;
+  margin-bottom: 1rem;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr !important;
+  }
+`
 
 const Gallery = observer(() => {
 
@@ -14,7 +22,7 @@ const Gallery = observer(() => {
   
   return (
     <Wrapper>
-      <ImageList sx={{ width: '100%' }} cols={2} rowHeight='auto'>
+      <ImageListStyled cols={2} rowHeight='auto'>
         {roverStore.currentPhotos.map(elem => (
           <ImageListItem key={elem.id}>
             <img
@@ -24,9 +32,13 @@ const Gallery = observer(() => {
               alt={elem.id}
               loading="lazy"
             />
+            <ImageListItemBar
+              title={elem.camera.full_name}
+              subtitle={elem.earth_date}
+            />
           </ImageListItem>
         ))}
-      </ImageList>
+      </ImageListStyled>
     </Wrapper>
   )
 })

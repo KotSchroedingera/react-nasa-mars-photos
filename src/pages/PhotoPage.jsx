@@ -6,7 +6,6 @@ import { ContainerStyled } from '../components/ContainerStyled';
 
 const GalleryLazy = lazy(() => import('../components/Gallery'));
 
-
 const PhotoPage = () => {
   
   return (
