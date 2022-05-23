@@ -26,8 +26,8 @@ const Gallery = observer(() => {
         {roverStore.currentPhotos.map(elem => (
           <ImageListItem key={elem.id}>
             <img
-              src={`${elem.img_src}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${elem.img_src}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${elem.img_src.replace('http', 'https')}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${elem.img_src.replace('http', 'https')}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               width='100%'
               alt={elem.id}
               loading="lazy"
