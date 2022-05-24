@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import styledComponents from 'styled-components';
 
-
 const Wrapper = styledComponents.div``; 
 const ImageListStyled = styledComponents(ImageList)`
   width: 100%;
@@ -13,7 +12,7 @@ const ImageListStyled = styledComponents(ImageList)`
   @media (max-width: 900px) {
     grid-template-columns: 1fr !important;
   }
-`
+`;
 
 const Gallery = observer(() => {
 
@@ -27,7 +26,6 @@ const Gallery = observer(() => {
           <ImageListItem key={elem.id}>
             <img
               src={`${elem.img_src.replace('http', 'https')}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${elem.img_src.replace('http', 'https')}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               width='100%'
               alt={elem.id}
               loading="lazy"
@@ -41,7 +39,6 @@ const Gallery = observer(() => {
       </ImageListStyled>
     </Wrapper>
   )
-})
-
+});
 
 export default Gallery;
